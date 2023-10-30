@@ -1,0 +1,70 @@
+import numpy as np
+
+thershold = 0.0000001
+beta = 0.8
+# adjency matrix
+a = [[1, 1, 0], [1, 0, 0], [1, 1, 1]]
+arr = np.array(a, dtype=float)
+s = []
+for i in range(0, len(a)):
+    s.append(np.sum(arr[:, i]))
+print("summation of columns :", s)
+M = arr
+for j in range(0, len(a)):
+    M[:, j] = M[:, j] / s[j]
+print("column stochatstic probability matrix", M)
+print(M)
+
+r_new = (1 + np.zeros([len(M), 1])) / len(M)
+print("initial rank vector :")
+print(r_new)
+c = (1 - beta) * r_new
+r_prev = r_new
+for i in range(1, 1001):
+    print("iteration :", i)
+    r_new = beta * np.matmul(M, r_prev) + c
+
+print("the rank vector:", r_new)
+diff = np.sum(abs(r_new - r_prev))
+if thershold > diff:
+    'break'
+
+    r_prev = r_new
+    print("the final rank vector :")
+    print(r_new[:, 0])
+
+
+"C:\Users\Adarsh shukla\PycharmProjects\pythonProject\venv\Scripts\python.exe" "C:\Users\Adarsh shukla\PycharmProjects\pythonProject\k_mean.py" 
+summation of coloumns : [3.0, 2.0, 1.0]
+column stochatstic probability matrix [[0.33333333 0.5        0.        ]
+ [0.33333333 0.         0.        ]
+ [0.33333333 0.5        1.        ]]
+[[0.33333333 0.5        0.        ]
+ [0.33333333 0.         0.        ]
+ [0.33333333 0.5        1.        ]]
+initial rank vector :
+[[0.33333333]
+ [0.33333333]
+ [0.33333333]]
+iteration : 1
+iteration : 2
+iteration : 3
+iteration : 4
+iteration : 5
+iteration : 6
+iteration : 7
+iteration : 8
+iteration : 9
+iteration : 10
+.
+.
+.
+.
+iteration : 998
+iteration : 999
+iteration : 1000
+the rank vector: [[0.28888889]
+ [0.15555556]
+ [0.55555556]]
+
+Process finished with exit code 0
